@@ -57,15 +57,15 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		70A1F86F76CF359A9CB15C09 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		70A1F86F76CF359A9CB15C09 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E0BFF381A6DA1A89E7FC1F8 /* Pods_LZHTTPClient_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LZHTTPClient_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		975389282EEF626E65B986AA /* Pods-LZHTTPClient_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LZHTTPClient_Tests.debug.xcconfig"; path = "Target Support Files/Pods-LZHTTPClient_Tests/Pods-LZHTTPClient_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9D9842051B1431C5F03670D4 /* Pods_LZHTTPClient_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LZHTTPClient_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5FAF958AE708F0722D3090A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		A5FAF958AE708F0722D3090A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A7E17E1D79CA96D80745B7F1 /* Pods-LZHTTPClient_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LZHTTPClient_Tests.release.xcconfig"; path = "Target Support Files/Pods-LZHTTPClient_Tests/Pods-LZHTTPClient_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		D9181D5177026A7871072DF8 /* LZHTTPClient.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = LZHTTPClient.podspec; path = ../LZHTTPClient.podspec; sourceTree = "<group>"; };
+		D9181D5177026A7871072DF8 /* LZHTTPClient.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LZHTTPClient.podspec; path = ../LZHTTPClient.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DFE8F910294D085EE8511306 /* Pods-LZHTTPClient_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LZHTTPClient_Example.release.xcconfig"; path = "Target Support Files/Pods-LZHTTPClient_Example/Pods-LZHTTPClient_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,7 +193,6 @@
 				975389282EEF626E65B986AA /* Pods-LZHTTPClient_Tests.debug.xcconfig */,
 				A7E17E1D79CA96D80745B7F1 /* Pods-LZHTTPClient_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

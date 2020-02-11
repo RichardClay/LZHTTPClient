@@ -37,4 +37,4 @@ typedef NS_ENUM(NSInteger, LZNetworkingType){
     LZNetworkingTypeGET = 1
 };
 
-#endif /* QSPNetworkingDefine_h */
+#endif /* LZNetworkingDefine_h */

@@ -7,13 +7,37 @@
 //
 
 #import "LZAppDelegate.h"
+#import <LZNetworkingManager.h>
 
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [self configNetworking];
     return YES;
+}
+
+- (void)configNetworking {
+    LZNetworkingConfig *networkingConfig = [LZNetworkingConfig networkingConfigWithBasePath:@""];
+    //以下均可灵活配置
+    LZErrorConfig *errorConfig = [LZErrorConfig errorConfigWithNetworkingErrorPrompt:^(NSError *error, UIViewController *controller) {
+       //TODO:网络错误
+    } dataErrorPrompt:^void(id responseObject, UIViewController *controller) {
+       //TODO:数据错误
+    }];
+    
+    //创建加载处理配置对象，处理加载过程
+    LZLoadConfig *loadConfig = [LZLoadConfig loadConfigWithLoadBegin:^(UIViewController *controller){
+        
+    } loadEnd:^(UIViewController *controller){
+    
+    }];
+    
+    //配置网络框架成功标识
+    [LZNetworkingManager configWithNetworkingConfig:networkingConfig errorConfig:errorConfig loadConfig:loadConfig condictionOfSuccess:^BOOL(id responseObject) {
+        return [responseObject[@"status"] integerValue] == 1;
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
