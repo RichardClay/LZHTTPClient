@@ -14,12 +14,11 @@
 {
     LZNetworkingConfig *config = [[LZNetworkingConfig alloc] init];
     config.basePath = basePath;
-    
     config.timeoutInterval = 15;
     config.SSLPinningMode = AFSSLPinningModeNone;
     config.allowInvalidCertificates = NO;
     config.validatesDomainName = NO;
-    
+    config.isUseProxy = NO;
     config.acceptableContentTypes = [NSSet setWithObjects:@"application/json",  @"text/json", @"text/javascript",@"text/html", @"text/plain", nil];
     config.HTTPHeaderDictionary = [NSDictionary dictionaryWithObject:@"ios" forKey:@"request-type"];
     

@@ -36,6 +36,16 @@
 @property (nonatomic, assign) BOOL validatesDomainName;
 
 /**
+是否可以使用代理（默认：NO）
+*/
+@property (nonatomic, assign) BOOL isUseProxy;
+
+/**
+是否授权验证DNS（默认：NO）
+*/
+@property (nonatomic, assign) BOOL isAuthenticationDNS;
+
+/**
  数据解析格式（默认：[NSSet setWithObjects:@"application/json",  @"text/json", @"text/javascript",@"text/html", @"text/plain", nil]）
  */
 @property (copy, nonatomic) NSSet<NSString *> *acceptableContentTypes;

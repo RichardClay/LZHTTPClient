@@ -43,6 +43,7 @@ static LZNetworkingManager *_shareInstance;
     
     return _sessionManager;
 }
+
 - (AFHTTPSessionManager *)sessionManagerWithNetworkingConfig:(LZNetworkingConfig *)config
 {
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:config.basePath]];
@@ -51,13 +52,69 @@ static LZNetworkingManager *_shareInstance;
     AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
     sessionManager.responseSerializer = serializer;
     [config.HTTPHeaderDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        [sessionManager.requestSerializer setValue:key forHTTPHeaderField:obj];
+        [sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
     }];
     sessionManager.responseSerializer.acceptableContentTypes = config.acceptableContentTypes;
     sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:config.SSLPinningMode];
     sessionManager.securityPolicy.allowInvalidCertificates = config.allowInvalidCertificates;//忽略https证书
     sessionManager.securityPolicy.validatesDomainName = config.validatesDomainName;//是否验证域名
+   
+    if (!config.isAuthenticationDNS) {
+        return sessionManager;
+    }
+    //授权验证
+    AFSecurityPolicy *secx = sessionManager.securityPolicy;
+    NSString *orangeHost = [sessionManager.requestSerializer.HTTPRequestHeaders valueForKey:@"host"];
     
+    [sessionManager setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession*session, NSURLAuthenticationChallenge *challenge, NSURLCredential *__autoreleasing*_credential) {
+        
+        NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        __autoreleasing NSURLCredential *credential =nil;
+        
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            if ([secx evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:orangeHost]) {
+                credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+                if (credential) {
+                    disposition = NSURLSessionAuthChallengeUseCredential;
+                } else {
+                    disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+                }
+            } else {
+                disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
+            }
+        } else {
+            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        }
+        
+        if (credential) {
+            *_credential = credential;
+        }
+        return disposition;
+    }];
+    
+    //请求大数据时，重定向的授权认证
+    [sessionManager setTaskDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
+        
+        NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        __autoreleasing NSURLCredential *_credential =nil;
+        
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            if ([secx evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:orangeHost]) {
+                disposition = NSURLSessionAuthChallengeUseCredential;
+                _credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            } else {
+                disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
+            }
+        } else {
+            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        }
+        
+        if (_credential) {
+            *credential = _credential;
+        }
+        
+        return disposition;
+    }];
     return sessionManager;
 }
 
@@ -124,6 +181,12 @@ static LZNetworkingManager *_shareInstance;
 
 - (LZNetworkingObject *)callWithParameterConfig:(LZParameterConfig *)parameterConfig
 {
+    NSParameterAssert(parameterConfig.apiPath.length > 0);
+    if (self.config.isUseProxy == false) {
+        if ([self isUseProxy]) {
+            return nil;
+        }
+    }
     AFHTTPSessionManager *sessionManager = parameterConfig.networkingConfig ? [self sessionManagerWithNetworkingConfig:parameterConfig.networkingConfig] : self.sessionManager;
     [self showLoad:parameterConfig];
     LZNetworking_weakSelf
@@ -291,6 +354,16 @@ static LZNetworkingManager *_shareInstance;
             loadConfig.loadEnd(parameterConfig.controller);
         }
     }
+}
+
+- (BOOL)isUseProxy {
+   CFDictionaryRef dictionary = CFNetworkCopySystemProxySettings();
+   const CFStringRef proxyCFstr = (const CFStringRef)CFDictionaryGetValue(dictionary, (const void*)kCFNetworkProxiesHTTPProxy);
+   NSString* proxy = (__bridge NSString *)proxyCFstr;
+   if (proxy.length > 0) {
+       return YES;
+   }
+   return NO;
 }
 
 
