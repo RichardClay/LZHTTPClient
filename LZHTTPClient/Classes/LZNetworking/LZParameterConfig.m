@@ -22,7 +22,7 @@
         self.cancelDependence = cancelDependence;
         self.controller = controller;
         self.completion = completion;
-        
+        self.downloadSaveUrl = @"";
         self.type = LZNetworkingTypePOST;
         self.autoCancel = YES;
         self.showError = YES;

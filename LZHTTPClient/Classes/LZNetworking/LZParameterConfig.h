@@ -24,6 +24,11 @@
 @property (copy, nonatomic) NSArray<LZUploadModel *> *uploadModels;
 
 /**
+下载文件存储目录（默认为nil）
+*/
+@property (nonatomic,copy ) NSString *downloadSaveUrl;
+
+/**
  请求api
  */
 @property (copy, nonatomic) NSString *apiPath;

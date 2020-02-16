@@ -57,7 +57,7 @@
  @param parameters 参数
  @param dependence 依赖对象
  @param completion 完成的回调
- @return QSPNetworkingObject对象
+ @return LZNetworkingObject对象
  */
 + (LZNetworkingObject *)defaultCall:(NSString *)apiPath parameters:(NSDictionary *)parameters cancelDependence:(id)dependence controller:(UIViewController *)controller completion:(LZCompletionBlock)completion;
 
@@ -68,15 +68,25 @@
  @param parameters 参数
  @param dependence 依赖对象
  @param completion 完成的回调
- @return QSPNetworkingObject对象
+ @return LZNetworkingObject对象
  */
 + (LZNetworkingObject *)getCall:(NSString *)apiPath parameters:(NSDictionary *)parameters cancelDependence:(id)dependence controller:(UIViewController *)controller completion:(LZCompletionBlock)completion;
+
+/**
+下载调用（最终转化为callWithParameterConfig方法调用）
+
+@param apiPath api
+@param dependence 依赖对象
+@param completion 完成的回调
+@return LZNetworkingObject对象
+*/
++ (LZNetworkingObject *)downloadCall:(NSString *)apiPath cancelDependence:(id)dependence controller:(UIViewController *)controller completion:(LZCompletionBlock)completion;
 
 /**
  使用配置对象调用
 
  @param parameterConfig 配置对象
- @return QSPNetworkingObject对象
+ @return LZNetworkingObject对象
  */
 + (LZNetworkingObject *)callWithParameterConfig:(LZParameterConfig *)parameterConfig;
 
@@ -86,6 +96,7 @@
  @param task 网络任务
  */
 + (void)cancelWithTask:(NSURLSessionTask *)task;
+
 
 @end
 

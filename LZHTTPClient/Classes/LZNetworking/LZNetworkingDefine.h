@@ -34,7 +34,8 @@ typedef void (^LZLoadBlock)(UIViewController *controller);
 
 typedef NS_ENUM(NSInteger, LZNetworkingType){
     LZNetworkingTypePOST = 0,
-    LZNetworkingTypeGET = 1
+    LZNetworkingTypeGET = 1,
+    LZNetworkingTypeDOWNLOAD =2
 };
 
 #endif /* LZNetworkingDefine_h */

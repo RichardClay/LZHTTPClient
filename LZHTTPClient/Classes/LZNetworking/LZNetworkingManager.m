@@ -151,11 +151,19 @@ static LZNetworkingManager *_shareInstance;
     LZParameterConfig *parameterConfig = [LZParameterConfig parameterConfigWithParameters:parameters apiPath:apiPath cancelDependence:dependence controller:controller completion:completion];
     return [self callWithParameterConfig:parameterConfig];
 }
+
 + (LZNetworkingObject *)getCall:(NSString *)apiPath parameters:(NSDictionary *)parameters cancelDependence:(id)dependence controller:(UIViewController *)controller completion:(LZCompletionBlock)completion {
     LZParameterConfig *parameterConfig = [LZParameterConfig parameterConfigWithParameters:parameters apiPath:apiPath cancelDependence:dependence controller:controller completion:completion];
     parameterConfig.type = LZNetworkingTypeGET;
     return [self callWithParameterConfig:parameterConfig];
 }
+
++ (LZNetworkingObject *)downloadCall:(NSString *)apiPath cancelDependence:(id)dependence controller:(UIViewController *)controller completion:(LZCompletionBlock)completion {
+    LZParameterConfig *parameterConfig = [LZParameterConfig parameterConfigWithParameters:@{} apiPath:apiPath cancelDependence:dependence controller:controller completion:completion];
+    parameterConfig.type = LZNetworkingTypeDOWNLOAD;
+    return [self callWithParameterConfig:parameterConfig];
+}
+
 + (LZNetworkingObject *)callWithParameterConfig:(LZParameterConfig *)config
 {
     return [[self manager] callWithParameterConfig:config];
@@ -203,11 +211,28 @@ static LZNetworkingManager *_shareInstance;
         }];
         
         return [self addDependence:parameterConfig andTask:task];
-    }
-    else
-    {
-        NSURLSessionDataTask *task = [self extracted:parameterConfig sessionManager:sessionManager weakSelf:weakSelf];
+    }else if (parameterConfig.type == LZNetworkingTypeDOWNLOAD){
+     
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:parameterConfig.apiPath]];
+        NSURLSessionDownloadTask *downloadTask = [sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+            if (parameterConfig.progress) {
+                parameterConfig.progress(downloadProgress);
+            }
+        } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            if (parameterConfig.downloadSaveUrl.length) {
+                return  [NSURL fileURLWithPath:parameterConfig.downloadSaveUrl];
+            }else{
+                NSString *fullPath =[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject stringByAppendingString:response.suggestedFilename];
+                return  [NSURL fileURLWithPath:fullPath];
+            }
+        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            
+        }];
+        [downloadTask resume];
+        return [self addDependence:parameterConfig andTask:downloadTask];
         
+    }else{
+        NSURLSessionDataTask *task = [self extracted:parameterConfig sessionManager:sessionManager weakSelf:weakSelf];
         return [self addDependence:parameterConfig andTask:task];
     }
 }
