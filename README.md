@@ -22,7 +22,7 @@ pod 'LZHTTPClient'
 
 ## 使用说明
 ### 配置网络框架
-此网络框架的配置需要LZNetworkingConfig（网络配置对象）、LZErrorConfig（错误处理配置对象）、LZLoadConfig（加载处理配置对象）以及一个判断网络请求数据正确的block共同完成。
+此网络框架的配置需要LZNetworkingConfig（网络配置对象）、LZErrorConfig（错误处理配置对象）、LZLoadConfig（加载处理配置对象）以及一个判断网络请求数据正确的block共同完成（Block内可做数据处理，根据不同情况做容错）
 ```
 - (void)configNetworking {
     //创建网络配置对象，控制网络请求
@@ -31,32 +31,30 @@ pod 'LZHTTPClient'
     //创建错误处理配置对象，处理网络、数据错误
     LZErrorConfig *errorConfig = [LZErrorConfig errorConfigWithNetworkingErrorPrompt:^(NSError *error, UIViewController *controller) {
         if (error.code == -999) {
-            [LoadClass showMessage:K_NetRequestMessage_Cancel toView:self.window];
+            //toast
         }
         else if (error.code == -1001)
         {
-            [LoadClass showMessage:K_NetRequestMessage_TimeOut toView:controller.view];
+            //toast
         }
         else
         {
-            [LoadClass showMessage:K_NetRequestMessage_Failure toView:controller.view];
+            //toast
         }
     } dataErrorPrompt:^void(id responseObject, UIViewController *controller) {
+        //数据错误
         if (responseObject == nil || [responseObject isKindOfClass:[NSNull class]]) {
-            [LoadClass showMessage:K_NetRequestMessage_NoData toView:controller.view];
+            
         } else {
-            if ([responseObject[@"status"] intValue] != 1) {
-                NSString *message = responseObject[@"message"] ? responseObject[@"message"] : K_NetRequestMessage_Error;
-                [LoadClass showMessage:message toView:controller.view];
-            }
+           
         }
     }];
     
-    //创建加载处理配置对象，处理加载过程
+    //统一创建加载处理配置对象，处理加载过程
     LZLoadConfig *loadConfig = [LZLoadConfig loadConfigWithLoadBegin:^(UIViewController *controller){
-        [LoadClass beginLoadWithMessage:K_NetRequestMessage_Load toView:controller.view];
+        
     } loadEnd:^(UIViewController *controller){
-        [LoadClass endLoadFromView:controller.view];
+        
     }];
     
     //配置网络框架

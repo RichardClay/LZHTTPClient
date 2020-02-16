@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
 #import <objc/runtime.h>
+#import "NSDictionary+SetNullWithStr.h"
 
 static LZNetworkingManager *_shareInstance;
 
@@ -232,6 +233,11 @@ static LZNetworkingManager *_shareInstance;
         if (errorConfig.dataErrorPrompt) {
             errorConfig.dataErrorPrompt(responseObject, parameterConfig.controller);
         }
+    }
+    
+    //过滤数据
+    if (self.config.filterNullObj) {
+        responseObject = [NSDictionary replaceNullObjectWithResponse:responseObject];
     }
     
     //执行成功条件

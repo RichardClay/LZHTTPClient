@@ -46,6 +46,11 @@
 @property (nonatomic, assign) BOOL isAuthenticationDNS;
 
 /**
+是否过滤空对象（默认：YES）
+*/
+@property (nonatomic, assign) BOOL filterNullObj;
+
+/**
  数据解析格式（默认：[NSSet setWithObjects:@"application/json",  @"text/json", @"text/javascript",@"text/html", @"text/plain", nil]）
  */
 @property (copy, nonatomic) NSSet<NSString *> *acceptableContentTypes;

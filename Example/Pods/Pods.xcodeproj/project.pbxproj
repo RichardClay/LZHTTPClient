@@ -20,6 +20,8 @@
 		207F1D61FBD2917D921F0CEDAF2D5E5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
 		2670C4F6033F2EFB3666001CCA17E148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
 		276D79878C2204534633B35580421938 /* LZNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4575D1AA0DA82A1DF811D5CDE5B27914 /* LZNetworkingManager.m */; };
+		289A223323F9043300178B9C /* NSDictionary+SetNullWithStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 289A223123F9043200178B9C /* NSDictionary+SetNullWithStr.m */; };
+		289A223423F9043300178B9C /* NSDictionary+SetNullWithStr.h in Headers */ = {isa = PBXBuildFile; fileRef = 289A223223F9043200178B9C /* NSDictionary+SetNullWithStr.h */; };
 		2AE1F29F045D02727E815DBBAC8C7B4F /* AFNetworkActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B9BA51B1CD3F539E7009DD576A24446B /* AFNetworkActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3033C2DE9CB2085ECBB95717CFB6425A /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B5E2A31A9B6FA31D86913EFE8CDB5D /* AFAutoPurgingImageCache.m */; };
 		34A7C5747B4C0825465453E196E57FAA /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5A0E54D5EB56767B27C264A5521B82 /* UIButton+AFNetworking.m */; };
@@ -113,6 +115,8 @@
 		16BAF235D6C6151852641F560F429049 /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
 		1792565319D42132DA9B40A0F468B570 /* Pods-LZHTTPClient_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-LZHTTPClient_Example.modulemap"; sourceTree = "<group>"; };
 		1C46BF32442A1135CE197A34568A199A /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
+		289A223123F9043200178B9C /* NSDictionary+SetNullWithStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+SetNullWithStr.m"; path = "LZHTTPClient/Classes/LZNetworking/NSDictionary+SetNullWithStr.m"; sourceTree = "<group>"; };
+		289A223223F9043200178B9C /* NSDictionary+SetNullWithStr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+SetNullWithStr.h"; path = "LZHTTPClient/Classes/LZNetworking/NSDictionary+SetNullWithStr.h"; sourceTree = "<group>"; };
 		29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		2A38ED7DD61CEECDF8143492B3D2BA43 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
 		2D382C7C00AECB9300B5353E69AD0351 /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 		A6B99DE76D0744B23C1C789F9991E928 /* LZHTTPClient */ = {
 			isa = PBXGroup;
 			children = (
+				289A223223F9043200178B9C /* NSDictionary+SetNullWithStr.h */,
+				289A223123F9043200178B9C /* NSDictionary+SetNullWithStr.m */,
 				DE2CF0B25E09F9F319EF8C68A394DA59 /* LZErrorConfig.h */,
 				FD29BF8ECA4AEB172CC7253CB904C0D0 /* LZErrorConfig.m */,
 				73ECB7908AE8987E359EED8A82F1714B /* LZLoadConfig.h */,
@@ -515,6 +521,7 @@
 			files = (
 				870044029B3BA449A0932AAE3A495DE9 /* AFAutoPurgingImageCache.h in Headers */,
 				F407B4E0B40A8AA4CA7443563F105E40 /* AFCompatibilityMacros.h in Headers */,
+				289A223423F9043300178B9C /* NSDictionary+SetNullWithStr.h in Headers */,
 				169B3FC2BD33B8FBC2D4C35A1C1DC6BF /* AFHTTPSessionManager.h in Headers */,
 				E261B82A0EEFE0EA897EA1A36C69C1CE /* AFImageDownloader.h in Headers */,
 				2AE1F29F045D02727E815DBBAC8C7B4F /* AFNetworkActivityIndicatorManager.h in Headers */,
@@ -725,6 +732,7 @@
 				6E4C66ABA27A0F4EFDAA3E8B21A9384F /* AFNetworkActivityIndicatorManager.m in Sources */,
 				3BDC8FBDB7922AA1ABA2C90DBA2DBB35 /* AFNetworking-dummy.m in Sources */,
 				95DAE5AD46A86973A77907D38716F694 /* AFNetworkReachabilityManager.m in Sources */,
+				289A223323F9043300178B9C /* NSDictionary+SetNullWithStr.m in Sources */,
 				769B6260247C5624A11411541C0AA4E2 /* AFSecurityPolicy.m in Sources */,
 				E17973BC9CEAE4ED0A7492450F95ACEF /* AFURLRequestSerialization.m in Sources */,
 				A5D86CC71480778ECD0EE81138D48C91 /* AFURLResponseSerialization.m in Sources */,
